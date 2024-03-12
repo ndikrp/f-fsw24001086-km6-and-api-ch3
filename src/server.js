@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
     res.json({ message: 'Ping Succesfuly!' })
 })
 
-app.use('/', routes)
+app.use(routes)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT} `)
