@@ -44,5 +44,47 @@ router.post('/cars', (req, res) => {
     res.status(201).json({ Status: 'Success', message: 'New car added!', newCar });
 })
 
+router.put('/cars/:id', (req, res) => {
+    const { id } = req.params;
+    const carIndex = cars.findIndex(car => car.id === id);
+
+    if (carIndex === -1) {
+        return res.status(404).json({ error: 'Car not found' });
+    }
+
+    const updatedCarData = req.body;
+    const existingCar = cars[carIndex];
+
+    const updatedCar = {
+        ...existingCar,
+        ...updatedCarData
+    };
+    cars[carIndex] = updatedCar;
+
+    res.status(200).json({ Status: 'Success', message: 'Car updated!', updatedCar });
+});
+
+router.put('/cars/:id', (req, res) => {
+    const { id } = req.params;
+    const carIndex = cars.findIndex(car => car.id === id);
+
+    if (carIndex === -1) {
+        return res.status(404).json({ error: 'Car not found' });
+    }
+
+    const updatedCarData = req.body;
+    const existingCar = cars[carIndex];
+
+    const updatedCar = {
+        ...existingCar,
+        ...updatedCarData
+    };
+
+    cars[carIndex] = updatedCar;
+
+    res.status(200).json({ Status: 'Success', message: 'Car updated!', updatedCar });
+});
+
+
 module.exports = router
 
