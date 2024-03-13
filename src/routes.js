@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const cars = require('./cars')
 const { v4: uuidv4 } = require('uuid');
-const app = express()
 
 
 // Get list of cars
@@ -43,7 +42,6 @@ router.post('/cars', (req, res) => {
     }
     cars.push(newCar);
     res.status(201).json({ Status: 'Success', message: 'New car added!', newCar });
-
 })
 
 module.exports = router
