@@ -6,18 +6,33 @@ const { v4: uuidv4 } = require('uuid');
 
 // Get list of cars
 router.get('/cars', (req, res) => {
-    const indentedJson = JSON.stringify(cars, null, 2)
-    res.setHeader('Content-Type', 'application/json')
-    res.send(indentedJson)
+    const car = JSON.parse(JSON.stringify(cars))
+    res.status(200).json({
+        status: 'Success',
+        totalData: cars.length,
+        data: {
+            car
+        }
+    })
 })
 
 // Get cars
 router.get('/cars/:id', (req, res) => {
     const { id } = req.params
     const car = cars.find(car => car.id === id)
-    const indentedJson = JSON.stringify(car, null, 2)
-    res.setHeader('Content-Type', 'application/json')
-    res.send(indentedJson)
+    if (!car) {
+        return res.status(404).json({
+            status: 'fail',
+            message: `Car with ID : ${id} not found!`
+        })
+    }
+    res.status(200).json({
+        status: 'Success',
+        data: {
+            car
+        }
+    })
+
 })
 
 router.post('/cars', (req, res) => {
@@ -49,7 +64,7 @@ router.put('/cars/:id', (req, res) => {
     const carIndex = cars.findIndex(car => car.id === id);
 
     if (carIndex === -1) {
-        return res.status(404).json({ error: 'Car not found' });
+        return res.status(404).json({ error: `Car with ID : ${id} not found!` });
     }
 
     const updatedCarData = req.body;
@@ -64,26 +79,18 @@ router.put('/cars/:id', (req, res) => {
     res.status(200).json({ Status: 'Success', message: 'Car updated!', updatedCar });
 });
 
-router.put('/cars/:id', (req, res) => {
-    const { id } = req.params;
+router.delete('/cars/:id', (req, res) => {
+    const id = req.params.id
     const carIndex = cars.findIndex(car => car.id === id);
 
     if (carIndex === -1) {
-        return res.status(404).json({ error: 'Car not found' });
+        return res.status(404).json({ error: `Car with ID : ${id} not found!` });
     }
 
-    const updatedCarData = req.body;
-    const existingCar = cars[carIndex];
+    cars.splice(carIndex, 1)
 
-    const updatedCar = {
-        ...existingCar,
-        ...updatedCarData
-    };
-
-    cars[carIndex] = updatedCar;
-
-    res.status(200).json({ Status: 'Success', message: 'Car updated!', updatedCar });
-});
+    res.status(200).json({ Status: 'Success', message: `Car with ID : ${id} deleted!` });
+})
 
 
 module.exports = router
