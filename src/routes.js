@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const cars = require('./cars')
+const cars = require('./data/cars')
 const { v4: uuidv4 } = require('uuid');
 
 
-// Get list of cars
-router.get('/cars', (req, res) => {
+
+// Get all cars
+const getCars = (req, res) => {
     const car = JSON.parse(JSON.stringify(cars))
     res.status(200).json({
         status: 'Success',
@@ -14,10 +15,10 @@ router.get('/cars', (req, res) => {
             car
         }
     })
-})
+}
 
-// Get cars
-router.get('/cars/:id', (req, res) => {
+// Get car details by Id
+const getCarsbyId = (req, res) => {
     const { id } = req.params
     const car = cars.find(car => car.id === id)
     if (!car) {
@@ -32,10 +33,10 @@ router.get('/cars/:id', (req, res) => {
             car
         }
     })
+}
 
-})
-
-router.post('/cars', (req, res) => {
+// Insert new car
+const insertCar = (req, res) => {
     const newCarData = req.body
     const requireFields = [
         'plate', 'manufacture', 'model', 'image',
@@ -57,9 +58,10 @@ router.post('/cars', (req, res) => {
     }
     cars.push(newCar);
     res.status(201).json({ Status: 'Success', message: 'New car added!', newCar });
-})
+}
 
-router.put('/cars/:id', (req, res) => {
+// Update car by Id
+const updateCar = (req, res) => {
     const { id } = req.params;
     const carIndex = cars.findIndex(car => car.id === id);
 
@@ -77,9 +79,10 @@ router.put('/cars/:id', (req, res) => {
     cars[carIndex] = updatedCar;
 
     res.status(200).json({ Status: 'Success', message: 'Car updated!', updatedCar });
-});
+}
 
-router.delete('/cars/:id', (req, res) => {
+// Delete car by Id
+const deleteCar = (req, res) => {
     const id = req.params.id
     const carIndex = cars.findIndex(car => car.id === id);
 
@@ -90,8 +93,15 @@ router.delete('/cars/:id', (req, res) => {
     cars.splice(carIndex, 1)
 
     res.status(200).json({ Status: 'Success', message: `Car with ID : ${id} deleted!` });
-})
+}
 
+
+router.route("/api/v1/cars").get(getCars).post(insertCar)
+router
+    .route("/api/v1/cars/:id")
+    .get(getCarsbyId)
+    .patch(updateCar)
+    .delete(deleteCar)
 
 module.exports = router
 
