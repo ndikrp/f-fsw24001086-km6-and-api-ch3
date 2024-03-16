@@ -13,10 +13,12 @@ Fullstack Web Development Challenge 3 Binar Academy - FSW2402KM6004 Andhika Rizk
 The service available:
 
 - Endpoint
-  <pre>POST /form</pre>
-  <pre>GET  /form</pre>
-  <pre>PUT  /form/{name}</pre>
-  <pre>DELETE  /form/{name}</pre>
+  <pre>GET  /</pre>
+  <pre>GET  /cars</pre>
+  <pre>GET  /cars/:id</pre>
+  <pre>POST /cars</pre>
+  <pre>PUT  /cars/:id</pre>
+  <pre>DELETE  /cars/:id</pre>
 
   ### Dependency
 * [express](https://www.npmjs.com/package/express) (API Framework)
