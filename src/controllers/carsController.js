@@ -1,9 +1,5 @@
-const express = require('express')
-const router = express.Router()
-const cars = require('./data/cars')
-const { v4: uuidv4 } = require('uuid');
-
-
+const { v4: uuidv4 } = require('uuid')
+const cars = require('../data/cars')
 
 // Get all cars
 const getCars = (req, res) => {
@@ -95,13 +91,10 @@ const deleteCar = (req, res) => {
     res.status(200).json({ Status: 'Success', message: `Car with ID : ${id} deleted!` });
 }
 
-
-router.route("/api/v1/cars").get(getCars).post(insertCar)
-router
-    .route("/api/v1/cars/:id")
-    .get(getCarsbyId)
-    .patch(updateCar)
-    .delete(deleteCar)
-
-module.exports = router
-
+module.exports = {
+    getCars,
+    getCarsbyId,
+    insertCar,
+    updateCar,
+    deleteCar
+}
