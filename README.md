@@ -7,7 +7,7 @@ Fullstack Web Development Challenge 3 Binar Academy - FSW2402KM6004 Andhika Rizk
       `npm run start`
    - run in development
       `npm run dev`
-4. Send http request method using Postman (see the endpoint below)
+4. Send http request method using Postman http://localhost:8000 (see the endpoint below)
 5. Done
 
 The service available:
